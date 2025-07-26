@@ -1,19 +1,16 @@
 import streamlit as st
 import gspread
-import json
 from google.oauth2.service_account import Credentials
 from datetime import datetime
 
 # --- 1. Conexión con Google Sheets ---
-SHEET_ID = "19U5yr-iDoSlCqzujspUA9O14mTAFuaiMYBiaHTfriGQ"
-SHEET_NAME = "profes"
+SHEET_ID = "19U5yr-iDoSlCqzujspUA9O14mTAFuaiMYBiaHTfriGQ"  # Reemplaza esto con el ID real de tu hoja
+SHEET_NAME = "profes"       # El nombre de la pestaña dentro del archivo
 
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
+CREDS_FILE = "credentials.json"
 
-# Cargar credenciales desde st.secrets
-creds_dict = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
-creds = Credentials.from_service_account_info(creds_dict, scopes=SCOPES)
-
+creds = Credentials.from_service_account_file(CREDS_FILE, scopes=SCOPES)
 client = gspread.authorize(creds)
 sheet = client.open_by_key(SHEET_ID).worksheet(SHEET_NAME)
 
